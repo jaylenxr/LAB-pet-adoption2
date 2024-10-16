@@ -19,19 +19,41 @@
   <button type="button" class="btn btn-outline-success" id="dog-button">Dog</button>
   <button type="button" class="btn btn-outline-danger" id="view-btn">View All</button>
     </div>
-
-    <div class="type-text" id="type"></div>
   </div>
 
   <div id="app"></div>
   <br>
-    <hr>
+  <hr>
 
   <br>
-
-
   <!-- BEGINNING OF PET FORM -->
 
+    <div class="form-container">
+      <form>
+
+      <div class="form-floating mb-3">
+        <input type="email" class="form-control" id="name" placeholder="Name">
+        <label for="floatingInput">Pet Name</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="color" placeholder="color" required>
+        <label for="floatingInput">Color</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="typeOfAnimal" placeholder="type" required>
+        <label for="floatingInput">Type of Animal</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="url" class="form-control" id="image" placeholder="image" required>
+        <label for="floatingInput">Pet Image</label>
+      </div>
+      <button type="submit" class="btn btn-success" id="form-submit">Add Buddy
+      </button>
+      </form>
+    </div>
 
 
 
