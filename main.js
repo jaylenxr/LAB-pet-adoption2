@@ -241,36 +241,45 @@ const pets = [
     }
   ];
 
-const targetingApp = document.querySelector("#app");
+  const renderToDom = (divId, htmlToRender) => {
+    const targetingApp = document.querySelector(divId);
+    targetingApp.innerHTML = htmlToRender;
+    };
 
-let domString = "";
-for (const pet of pets) {
-  domString += `<div class="card" id="card-container" >
-      <img src=${pet.imageUrl} class="card-img-top" alt=${pet.name} style="width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">${pet.name}</h5>
-        <p class="card-text">${pet.specialSkill}</p>
-        <p class="card-text">${pet.color}</p>
+
+const cardsOnDom = (pets) => {
+  let domString = "";
+    for (const pet of pets) {
+    domString += `<div class="card" style="width: 18rem;">
+    <h3 class="card-title">${pet.name}</h3>
+    <img src=${pet.imageUrl} class="card-img-top" alt="...">
+    <div class="card-body">
+      <p class="card-text">${pet.color}</p>
+      <p class="card-text">${pet.specialSkill}</p>
+      <p class="card-title">${pet.type}</p>
       </div>
     </div>`;
-};
-
-targetingApp.innerHTML = domString;
+    }
 
 // RENDER HERE //
 renderToDom ("#app", domString);
+  };
 
 //FILTER//
-const filter = (array, typeOf) => {
-  const typeOfArray = [];
+const filter = (array, typeString) => {
+  const typeArray = []; //initializes the array
 
-  array.forEach((item) => {
-        if (item.type === typeOf) {
-          typeOfArray.push(item)
-        }
-      });
- return typeOfArray;
+  array.forEach((pet) => { // for loop iterates over each pet in array
+    if (pet.type === typeString) { //condition that checks the pet.type of the object against the typeString parameter
+      typeArray.push(pet); //if true the pet object is pushed into the typeArray
+   }
+ });
+
+
+ return typeArray; //returns the filtered array
   };
+
+  cardsOnDom(pets)
 
   // Target buttons on the DOM//
   const catButton = document.querySelector("#cat-button");
@@ -281,29 +290,41 @@ const filter = (array, typeOf) => {
   // EVENT LISTENER//
 
   catButton.addEventListener("click", () => {
-    const greenTeamMembers = filter(pets, "cat");
-    renderToDom("#type", "CATS");
-    cardsOnDom(greenTeamMembers);
-    document.body.style.background="teal"
+    const catTypePets = filter(pets, "cat");
+    cardsOnDom(catTypePets);
   });
 
-
   dinoButton.addEventListener("click", () => {
-    const greenTeamMembers = filter(pets, "dino");
-    renderToDom("#type", "DINOS");
-    cardsOnDom(greenTeamMembers);
-    document.body.style.background="blue"
+    const dinoTypePets = filter(pets, "dino");
+    cardsOnDom(dinoTypePets);
   });
 
   dogButton.addEventListener("click", () => {
-   const greenTeamMembers = filter(pets, "dog");
-   renderToDom("#type", "DOGS");
-   cardsOnDom(greenTeamMembers);
-   document.body.style.background="lightgreen"
+   const dogTypePets = filter(pets, "dog");
+   cardsOnDom(dogTypePets);
  });
 
  viewAllButton.addEventListener("click", () => {
-    renderToDom("#type", "ALL PETS")
-    cardsOnDom(pets);
-    document.body.style.background="lightgrey"
+    cardsOnDom(viewAllTypePets);
   });
+
+
+const form = document.querySelector("form"); //declares my form variable. also instructs where to go on DOM
+const createPet = (e) => { //function that takes (event) as the parameter and handles the form submission
+  e.preventDefault();// prevents reload
+
+  const newFavPet = { //newFavPet is created to go into the pets array
+    id: pets.length +1,
+    name: document.querySelector("#name").value,
+    color: document.querySelector("#color").value,
+    specialSkill: document.querySelector("#specialSkill").value,
+    type: document.querySelector("#type").value,
+    imageUrl: document.querySelector("#imageUrl").value,
+  };
+
+  pets.push(newFavPet)
+  cardsOnDom(pets);
+  form.reset(); //resets form after the pet is chosen
+}
+
+form.addEventListener("submit", createPet);
