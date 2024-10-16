@@ -257,6 +257,7 @@ const cardsOnDom = (pets) => {
       <p class="card-text">${pet.color}</p>
       <p class="card-text">${pet.specialSkill}</p>
       <p class="card-title">${pet.type}</p>
+      <a href="#" class="btn btn-danger" id="delete">Remove</a>
       </div>
     </div>`;
     }
@@ -281,7 +282,50 @@ const filter = (array, typeString) => {
 
   cardsOnDom(pets)
 
-  // Target buttons on the DOM//
+
+const form = document.querySelector("form"); //declares my form variable. also instructs where to go on DOM
+const createPet = (e) => { //function that takes (event) as the parameter and handles the form submission
+  e.preventDefault();// prevents reload
+
+  const newFavPet = { //newFavPet is created to go into the pets array
+    id: pets.length +1,
+    name: document.querySelector("#name").value,
+    color: document.querySelector("#color").value,
+    specialSkill: document.querySelector("#specialSkill").value,
+    type: document.querySelector("#type").value,
+    imageUrl: document.querySelector("#imageUrl").value,
+  };
+
+  pets.push(newFavPet)
+  cardsOnDom(pets);
+  form.reset(); //resets form after the pet is chosen
+}
+
+form.addEventListener("submit", createPet);
+
+
+
+const app = document.querySelector("#app");
+    app.addEventListener("click", (e) => {
+
+      if (e.target.id.includes("delete")) {
+        const [, id] = e.target.id.split("--");
+        const index = pets.findIndex((e) => e.id === Number(id));
+        pets.splice(index, 1);
+
+        cardsOnDom(pets);
+      }
+    });
+
+    const startApp = () => {
+      cardsOnDom(pets);
+      // events(); // ALWAYS LAST
+    };
+
+    startApp();
+
+
+    // Target buttons on the DOM//
   const catButton = document.querySelector("#cat-button");
   const dinoButton = document.querySelector("#dino-button");
   const dogButton = document.querySelector("#dog-button");
@@ -307,24 +351,3 @@ const filter = (array, typeString) => {
  viewAllButton.addEventListener("click", () => {
     cardsOnDom(viewAllTypePets);
   });
-
-
-const form = document.querySelector("form"); //declares my form variable. also instructs where to go on DOM
-const createPet = (e) => { //function that takes (event) as the parameter and handles the form submission
-  e.preventDefault();// prevents reload
-
-  const newFavPet = { //newFavPet is created to go into the pets array
-    id: pets.length +1,
-    name: document.querySelector("#name").value,
-    color: document.querySelector("#color").value,
-    specialSkill: document.querySelector("#specialSkill").value,
-    type: document.querySelector("#type").value,
-    imageUrl: document.querySelector("#imageUrl").value,
-  };
-
-  pets.push(newFavPet)
-  cardsOnDom(pets);
-  form.reset(); //resets form after the pet is chosen
-}
-
-form.addEventListener("submit", createPet);
