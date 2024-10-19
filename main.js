@@ -246,7 +246,7 @@ const pets = [
     targetingApp.innerHTML = htmlToRender;
     };
 
-
+// Add cards on DOM //
 const cardsOnDom = (pets) => {
   let domString = "";
     for (const pet of pets) {
@@ -288,7 +288,7 @@ const createPet = (e) => { //function that takes (event) as the parameter and ha
   e.preventDefault();// prevents reload
 
   const newFavPet = { //newFavPet is created to go into the pets array
-    id: pets.length +1,
+    id: pets.length +1, // adds new pet each time form is submitted
     name: document.querySelector("#name").value,
     color: document.querySelector("#color").value,
     specialSkill: document.querySelector("#specialSkill").value,
